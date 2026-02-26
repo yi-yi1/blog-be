@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// 生成 Prisma Client 客户端代码
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 告诉 Prisma 使用的是 MySQL 数据库
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 文章表post
+// 👇 定义我们的核心：文章表 (Post)
+model Post {
+  id        Int      @id @default(autoincrement()) // 自增主键
+  title     String   @db.VarChar(255)              // 文章标题
+  content   String   @db.Text                      // Markdown 正文内容（使用 Text 类型存长文本）
+  excerpt   String?  @db.VarChar(500)              // 文章摘要（? 代表可以为空）
+  published Boolean  @default(false)               // 状态：是否发布（默认是草稿）
+  createdAt DateTime @default(now())               // 创建时间，自动设置为当前时间
+  updatedAt DateTime @updatedAt                    // 更新时间，每次修改自动更新
+}
