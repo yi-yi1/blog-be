@@ -16,7 +16,7 @@ datasource db {
 }
 
 // 文章表post
-// 👇 定义我们的核心：文章表 (Post)
+// 定义文章表 (Post)
 model Post {
   id        Int      @id @default(autoincrement()) // 自增主键
   title     String   @db.VarChar(255)              // 文章标题
@@ -25,4 +25,14 @@ model Post {
   published Boolean  @default(false)               // 状态：是否发布（默认是草稿）
   createdAt DateTime @default(now())               // 创建时间，自动设置为当前时间
   updatedAt DateTime @updatedAt                    // 更新时间，每次修改自动更新
+}
+
+// 定义任务表
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String   // 任务标题
+  description String?  // 任务详情（选填）
+  status      String   @default("TODO") // 任务状态：默认是待办。我们约定三种状态：TODO (待办), DOING (进行中), DONE (已完成)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
